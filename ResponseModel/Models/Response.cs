@@ -30,9 +30,10 @@ public abstract class Response : IResponse
         return new ErrorResponse(409, message);
     }
 }
-public class Response<T> : Response
+public class Response<T> : Response, IResponseContent<T>
 {
     public T? Content { get; private set; }
+
     public static Response<T> Ok(T? content)
     {
         return new Response<T>
@@ -42,7 +43,6 @@ public class Response<T> : Response
             Content = content
         };
     }
-
     public static Response<T> Error(T? content, string message)
     {
         return new Response<T>
