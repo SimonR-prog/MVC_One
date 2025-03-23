@@ -13,16 +13,12 @@
     <link rel="stylesheet" href="~/MVC_One.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="portal">
-        @await Html.PartialAsync("Partials/Sections/_LogoTypeLink")
-        @await Html.PartialAsync("Partials/Sections/_HeaderPortal")
-        @await Html.PartialAsync("Partials/Sections/_AsidePortal")
 
-        <main class="portal-main">
-            @RenderBody()
-        </main>
-    </div>
-    
+
+    <main class="center-main">
+        @RenderBody()
+    </main>
+
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
