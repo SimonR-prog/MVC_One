@@ -17,7 +17,23 @@ public class DataContext : DbContext
     public virtual DbSet<ProjectEntity> Projects { get; set; }
     public virtual DbSet<CompanyEntity> Companys { get; set; }
     public virtual DbSet<StatusEntity> Statuses { get; set; }
+    public virtual DbSet<UserProjectEntity> UserProjectEntities { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserProjectEntity>()
+            .HasKey(userProjectEntity => new { userProjectEntity.UserId, userProjectEntity.ProjectId });
+
+        modelBuilder.Entity<UserProjectEntity>()
+            .HasOne(userProjectEntity => userProjectEntity.User)
+            .WithMany(user => user.UserProjects)
+            .HasForeignKey(userProjectEntity => userProjectEntity.UserId);
+
+        modelBuilder.Entity<UserProjectEntity>()
+            .HasOne(userProjectEntity => userProjectEntity.Project)
+            .WithMany(project => project.UserProjects)
+            .HasForeignKey(userProjectEntity => userProjectEntity.ProjectId);
+    }
 }
 
 
