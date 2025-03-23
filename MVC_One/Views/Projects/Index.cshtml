@@ -1,4 +1,22 @@
 ﻿@{
-
-
+    Layout = "_Layout";
+    ViewData["Title"] = "Projects";
 }
+
+<partial name="Partials/Modals/_AddProjectsModal" />
+
+<section id="projects">
+    <header class="section-header">
+        <h1 class="h2">@ViewData["Title"]</h1>
+        <button class="btn btn-blue btn-add" type="button" data-modal="true" data-target="#addProjectsModal" >Add Project</button>
+    </header>
+
+    <div class="section-content">
+        <div class="section-surface">
+
+        </div>
+    </div>
+</section>
+
+
+
