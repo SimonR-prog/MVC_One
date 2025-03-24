@@ -145,28 +145,35 @@ html, body {
         justify-content: center;
     }
 
+        .portal .portal-header .account {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            width: 100%;
+        }
+            .portal .portal-header .account img {
+                width: 40px;
+                height: 40px;
+                margin-left: 1rem;
+            }
+            .portal .portal-header .account .bi {
+                padding-right: 2rem;
+                width: 22px;
+                height: 22px;
+                color: var(--gray-800);
+                border-right: 1px solid var(--border-color);
+            }
 
-    /*.account-content{    -------------fix------------
-        align-items: center;
-        justify-content: center;
-        margin: 5px;
-    }*/
-
-    .portal .portal-main {
-        grid-area: main;
-        padding: 2rem;
-    }
+.portal .portal-main {
+    grid-area: main;
+    padding: 2rem;
+}
 
 /* center screen */
 
 .center-main {
 
 }
-
-
-
-
-
 
 
 
@@ -184,6 +191,7 @@ html, body {
 }
 
 /* typography */
+
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: var(--font);
@@ -376,6 +384,16 @@ section .section-surface{
 #addProjectsModal .modal-content{
     width:450px;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
