@@ -1,16 +1,12 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
-    handleOpenModal();
+    handleOpenModals();
     handleCloseButtons();
-
-
-
-
 
 })
 
 
-function handleOpenModal() {
+function handleOpenModals() {
     const modalButtons = document.querySelectorAll('[data-modal="true"]')
     modalButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -28,24 +24,28 @@ function handleOpenModal() {
 function handleCloseButtons() {
     const closeButtons = document.querySelectorAll('[data-close="true"]')
     closeButtons.forEach(button => {
-        buttons.addEventListener('click', () => {
+        button.addEventListener('click', () => {
             const target = button.getAttribute('data-target')
             const closeObject = document.querySelector(target)
 
             if (closeObject) {
                 if (closeObject.classList.contains('modal')) {
-                    closeModal();
+                    closeModal(closeObject);
                 }
-                else if (closeObject.classList.contains('notification')){
-                    closeNotification();
-                }
+                //else if (closeObject.classList.contains('notification')){
+                //    closeNotification();
+                //}
             }
         })
     })
 }
-function closeModal() {
 
-}
-function closeNotification() {
+function closeModal(modal) {
+    if (modal) {
+        modal.classList.remove('flex');
+    }
+    //function closeNotification() {
+
+    //}
 
 }
