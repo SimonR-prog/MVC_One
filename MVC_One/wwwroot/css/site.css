@@ -349,6 +349,74 @@ h6, .h6 {
             margin-bottom: 2rem;
         }
 
+/* forms */
+form {
+    width: 100%;
+    position: relative;
+}
+
+    form input,
+    form select,
+    form textarea {
+        width: 100%;
+        font-size: 1em;
+        padding: 0.5rem 1rem;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        transition: border-color 0.1s ease-in-out;
+        outline: none;
+    }
+
+        form input:focus,
+        form select:focus,
+        form textarea:focus {
+            border-color: var(--border-focus-color);
+        }
+
+        form input::placeholder,
+        form select::placeholder,
+        form textarea::placeholder {
+            color: var(--text-extra-muted-color);
+            font-size: 0.9em;
+        }
+
+    form .form-group {
+        position: relative;
+        display: grid;
+        gap: 0.2rem;
+        margin-bottom: 1.2rem;
+    }
+
+    form .field-group {
+        position: relative;
+    }
+
+.input-validation-error,
+.input-validation-error:focus {
+    border-color: var(--error-border-color);
+}
+
+.field-validation-error {
+    background-color: var(--error-background-color);
+    color: var(--error-text-color);
+    font-size: 0.8em;
+    padding: 0.48em 1rem;
+    border-radius: 14px;
+    position: absolute;
+    top: 3px;
+    right: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+    .field-validation-error::before {
+        content: '\f071';
+        font-family: var(--font-fa-pro);
+        font-size: 1.2em;
+    }
+
+
 /* sections */
 
 section .section-header{

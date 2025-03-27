@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj" />
     <ProjectReference Include="..\ResponseModel\ResponseModel.csproj" />
   </ItemGroup>
 
