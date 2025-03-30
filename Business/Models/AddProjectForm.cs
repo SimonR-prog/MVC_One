@@ -20,10 +20,12 @@ public class AddProjectForm
 
     [DataType(DataType.Date)]
     [Display(Name = "Start Date")]
+    [Required(ErrorMessage = "Required")]
     public DateTime StartDate { get; set; }
 
     [DataType(DataType.Date)]
     [Display(Name = "End Date")]
+    [Required(ErrorMessage = "Required")]
     public DateTime EndDate { get; set; }
 
     [DataType(DataType.Currency)]

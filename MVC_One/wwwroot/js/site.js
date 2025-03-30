@@ -111,7 +111,3 @@ function closeModal(modal) {
         form.reset();
     })
 }
-
-
-
-           /* 47 minuter */
