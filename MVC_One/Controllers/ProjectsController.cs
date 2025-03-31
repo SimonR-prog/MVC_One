@@ -12,27 +12,27 @@ public class ProjectsController : Controller
         return View();
     }
 
-    [HttpPost]
-    public async IActionResult Add(AddProjectForm form)
-    {
-        if (!ModelState.IsValid) 
-        {
-            var errors = ModelState
-                .Where(x => x.Value?.Errors.Count > 0)
-                .ToDictionary(
-                    kvp => kvp.Key,
-                    kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage).ToArray()
-                );
-            return BadRequest(new { errors });
-        }
+    //[HttpPost]
+    //public async IActionResult Add(AddProjectForm form)
+    //{
+    //    if (!ModelState.IsValid) 
+    //    {
+    //        var errors = ModelState
+    //            .Where(x => x.Value?.Errors.Count > 0)
+    //            .ToDictionary(
+    //                kvp => kvp.Key,
+    //                kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage).ToArray()
+    //            );
+    //        return BadRequest(new { errors });
+    //    }
 
-        var result = await _projectService.CreateAsyncProject(form);
+    //    var result = await _projectService.CreateAsyncProject(form);
         
 
 
 
-        return Ok();
-    }
+    //    return Ok();
+    //}
 
     //[HttpPut]
     //public IActionResult Update(UpdateProjectForm form)

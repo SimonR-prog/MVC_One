@@ -3,6 +3,7 @@ using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Domain.Interfaces;
+using Domain.Models;
 
 namespace Data.Repositories;
 
