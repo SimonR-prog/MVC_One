@@ -1,10 +1,30 @@
+using Data.Context;
+using Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb")));
+builder.Services.AddIdentity<UserEntity, IdentityRole>(x =>
+{
+    x.User.RequireUniqueEmail = true;
+    x.Password.RequiredLength = 8;
+    //Check for more in the login videos. ------------
 
-
+}).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(x =>
+{
+    x.LoginPath = "/auth/signin";
+    x.AccessDeniedPath = "/auth/denied";
+    x.Cookie.HttpOnly = true;
+    x.Cookie.IsEssential = true;
+    x.Cookie.Expiration = TimeSpan.FromHours(1);
+    x.SlidingExpiration = true;
+});
+//Create a denied page? ------------
 
 
 var app = builder.Build();
@@ -18,9 +38,7 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
-
-
-app.UseRewriter(new RewriteOptions().AddRedirect("^$", "/a"));
+app.UseRewriter(new RewriteOptions().AddRedirect("^$", "/projects"));
 
 app.MapControllerRoute(
     name: "default",
