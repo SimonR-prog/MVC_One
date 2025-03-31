@@ -1,6 +1,6 @@
-﻿using ResponseModel.Interfaces;
+﻿using Domain.Interfaces;
 
-namespace ResponseModel.Models;
+namespace Domain.Models;
 
 public abstract class Response : IResponse
 {

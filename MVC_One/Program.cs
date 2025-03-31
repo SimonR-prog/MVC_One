@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Rewrite;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
@@ -11,9 +13,14 @@ app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+
+
+app.UseRewriter(new RewriteOptions().AddRedirect("^$", "/a"));
 
 app.MapControllerRoute(
     name: "default",
