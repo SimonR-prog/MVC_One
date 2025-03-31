@@ -1,4 +1,4 @@
-﻿namespace ResponseModel.Models;
+﻿namespace Domain.Models;
 
 public class SuccessResponse : Response
 {

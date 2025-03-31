@@ -1,7 +1,6 @@
 ﻿using Business.Models;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using ResponseModel.Interfaces;
-using ResponseModel.Models;
+using Domain.Interfaces;
+using Domain.Models;
 
 namespace Business.Services;
 

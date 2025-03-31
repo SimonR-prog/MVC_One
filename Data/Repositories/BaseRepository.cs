@@ -1,9 +1,8 @@
 ﻿using Data.Context;
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using ResponseModel.Interfaces;
-using ResponseModel.Models;
 using System.Linq.Expressions;
+using Domain.Interfaces;
 
 namespace Data.Repositories;
 

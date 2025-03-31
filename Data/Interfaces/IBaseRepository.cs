@@ -1,4 +1,4 @@
-﻿using ResponseModel.Interfaces;
+﻿using Domain.Interfaces;
 using System.Linq.Expressions;
 
 namespace Data.Interfaces;

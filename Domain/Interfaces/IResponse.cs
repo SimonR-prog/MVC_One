@@ -1,4 +1,4 @@
-﻿namespace ResponseModel.Interfaces
+﻿namespace Domain.Interfaces
 {
     public interface IResponse
     {
