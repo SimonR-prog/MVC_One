@@ -26,12 +26,19 @@ function runForms() {
 
                     window.location.reload();
                 }
-                else {
+                else if (res.status === 400) {
                     const data = await res.json()
                     if (data.errors) {
                         addFormErrorMessages(data.errors, form)
                     }
                 }
+                else if (res.status === 409) {
+                    alert('Name given in form already exists.')
+                }
+                else {
+                    alert('Something went wrong.')
+                }
+                
             }
             catch {
                 console.log("Something went wrong with the form.")

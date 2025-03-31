@@ -13,7 +13,7 @@ public class ProjectsController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add(AddProjectForm form)
+    public async IActionResult Add(AddProjectForm form)
     {
         if (!ModelState.IsValid) 
         {
@@ -26,7 +26,10 @@ public class ProjectsController : Controller
             return BadRequest(new { errors });
         }
 
-        //Save to db.
+        var result = await _projectService.CreateAsyncProject(form);
+        
+
+
 
         return Ok();
     }
