@@ -24,9 +24,9 @@ public class ProjectEntity
 
 
 
-    [ForeignKey(nameof(Status))]
+    [ForeignKey(nameof(StatusName))]
     public int StatusId { get; set; }
-    public StatusEntity Status { get; set; } = null!;
+    public StatusEntity StatusName { get; set; } = null!;
 
 
     [ForeignKey(nameof(Company))]

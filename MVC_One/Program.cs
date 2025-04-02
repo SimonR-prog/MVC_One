@@ -11,7 +11,7 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configura
 builder.Services.AddIdentity<UserEntity, IdentityRole>(x =>
 {
     x.User.RequireUniqueEmail = true;
-    x.Password.RequiredLength = 8;
+    x.Password.RequiredLength = 10;
     //Check for more in the login videos. ------------
 
 }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
