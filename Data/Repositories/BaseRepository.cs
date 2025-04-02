@@ -7,10 +7,10 @@ using Domain.Models;
 
 namespace Data.Repositories;
 
-public abstract class BaseRepository<TEntity>(DataContext context) : IBaseRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBaseRepository<TEntity, TModel> where TEntity : class
 {
     protected readonly DataContext _context = context;
-    protected readonly DbSet<TEntity> _db = context.Set<TEntity>();
+    protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
     public virtual async Task<IResponse> CreateAsync(TEntity entity)
     {
@@ -20,12 +20,12 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             {
                 return Response.Error("Entity in null.");
             }
-            await _db.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
             return Response.Ok();
         }
         catch (Exception ex)
-        { 
+        {
             return Response.Error($"An error occured: {ex.Message}");
         }
     }
@@ -34,7 +34,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         try
         {
-            var exists = await _db.AnyAsync(predicate);
+            var exists = await _dbSet.AnyAsync(predicate);
 
             return exists ? Response.Ok() : Response.NotFound("Entity not found.");
         }
@@ -44,11 +44,29 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         }
     }
 
-    public virtual async Task<IResponseContent<IEnumerable<TEntity>>> GetAllAsync()
+    public virtual async Task<IResponseContent<IEnumerable<TEntity>>> GetAllAsync(
+            bool orderByDescending = false,
+            Expression<Func<TEntity, object>>? sortBy = null,
+            Expression<Func<TEntity, bool>>? where = null,
+            params Expression<Func<TEntity, object>>[] includes)
     {
         try
         {
-            var entities = await _db.ToListAsync();
+            IQueryable<TEntity> query = _dbSet;
+
+            if (where != null)
+                query = query.Where(where);
+
+            if (includes != null && includes.Length != 0)
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+            if (sortBy != null)
+                query = orderByDescending
+                    ? query.OrderByDescending(sortBy)
+                    : query.OrderBy(sortBy);
+
+            var entities = await query.ToListAsync();
             if (entities.Count == 0)
                 return Response<IEnumerable<TEntity>>.Ok(new List<TEntity>());
 
@@ -60,11 +78,55 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         }
     }
 
-    public virtual async Task<IResponseContent<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
+    public virtual async Task<IResponseContent<IEnumerable<TSelect>>> GetAllAsync<TSelect>(
+            Expression<Func<TEntity, TSelect>> selector,
+            bool orderByDescending = false,
+            Expression<Func<TEntity, object>>? sortBy = null,
+            Expression<Func<TEntity, bool>>? where = null,
+            params Expression<Func<TEntity, object>>[] includes)
     {
         try
         {
-            var entity = await _db.FirstOrDefaultAsync(predicate);
+            IQueryable<TEntity> query = _dbSet;
+
+            if (where != null)
+                query = query.Where(where);
+
+            if (includes != null && includes.Length != 0)
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+            if (sortBy != null)
+                query = orderByDescending
+                    ? query.OrderByDescending(sortBy)
+                    : query.OrderBy(sortBy);
+
+            var entities = await query.Select(selector).ToListAsync();
+            if (entities.Count == 0)
+                return Response<IEnumerable<TSelect>>.Ok(new List<TSelect>());
+
+            return Response<IEnumerable<TSelect>>.Ok(entities);
+        }
+        catch (Exception ex)
+        {
+            return Response<IEnumerable<TSelect>>.Error(new List<TSelect>(), $"An error occured: {ex.Message}");
+        }
+    }
+
+    public virtual async Task<IResponseContent<TEntity>> GetAsync(
+        Expression<Func<TEntity, bool>> where,
+        params Expression<Func<TEntity, object>>[] includes)
+    {
+        try
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (includes != null && includes.Length != 0)
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+            var entity = await query.FirstOrDefaultAsync(where);
+
             if (entity == null)
                 return Response<TEntity>.Error(null, "Entity is null.");
 
@@ -81,13 +143,13 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         try
         {
             if (entity == null)
-                return Response<TEntity>.Error(null, "Entity is null.");
+                return Response.Error("Entity is null.");
 
             var result = await ExistsAsync(e => e == entity);
             if (result.Success == false)
                 return Response.NotFound("Entity not found");
 
-            _db.Update(entity);
+            _dbSet.Update(entity);
             await _context.SaveChangesAsync();
 
             return Response.Ok();
@@ -108,7 +170,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             if (result.Success == false)
                 return Response.NotFound("Entity not found");
 
-            _db.Remove(entity);
+            _dbSet.Remove(entity);
             await _context.SaveChangesAsync();
 
             return Response.Ok();
