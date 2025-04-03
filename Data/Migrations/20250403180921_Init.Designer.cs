@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250331185924_Init")]
+    [Migration("20250403180921_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -25,21 +25,21 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Data.Entities.CompanyEntity", b =>
+            modelBuilder.Entity("Data.Entities.ClientEntity", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("ClientName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyName")
+                    b.HasIndex("ClientName")
                         .IsUnique();
 
-                    b.ToTable("Companies");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
@@ -50,7 +50,7 @@ namespace Data.Migrations
                     b.Property<decimal?>("Budget")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("CompanyId")
+                    b.Property<string>("ClientId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -82,7 +82,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("StatusId");
 
@@ -99,13 +99,13 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Status")
+                    b.Property<string>("StatusName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Status")
+                    b.HasIndex("StatusName")
                         .IsUnique();
 
                     b.ToTable("Statuses");
@@ -317,13 +317,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.ProjectEntity", b =>
                 {
-                    b.HasOne("Data.Entities.CompanyEntity", "Company")
+                    b.HasOne("Data.Entities.ClientEntity", "ClientName")
                         .WithMany("Projects")
-                        .HasForeignKey("CompanyId")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.StatusEntity", "Status")
+                    b.HasOne("Data.Entities.StatusEntity", "StatusName")
                         .WithMany("Projects")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -335,9 +335,9 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Company");
+                    b.Navigation("ClientName");
 
-                    b.Navigation("Status");
+                    b.Navigation("StatusName");
 
                     b.Navigation("User");
                 });
@@ -393,7 +393,7 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Data.Entities.CompanyEntity", b =>
+            modelBuilder.Entity("Data.Entities.ClientEntity", b =>
                 {
                     b.Navigation("Projects");
                 });

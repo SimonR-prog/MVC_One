@@ -53,15 +53,15 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Companies",
+                name: "Clients",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CompanyName = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ClientName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Companies", x => x.Id);
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,7 +70,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    StatusName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,7 +196,7 @@ namespace Data.Migrations
                     Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    CompanyId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -209,9 +209,9 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Projects_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
+                        name: "FK_Projects_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -262,15 +262,15 @@ namespace Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Companies_CompanyName",
-                table: "Companies",
-                column: "CompanyName",
+                name: "IX_Clients_ClientName",
+                table: "Clients",
+                column: "ClientName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_CompanyId",
+                name: "IX_Projects_ClientId",
                 table: "Projects",
-                column: "CompanyId");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_StatusId",
@@ -283,9 +283,9 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Statuses_Status",
+                name: "IX_Statuses_StatusName",
                 table: "Statuses",
-                column: "Status",
+                column: "StatusName",
                 unique: true);
         }
 
@@ -317,7 +317,7 @@ namespace Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Companies");
+                name: "Clients");
 
             migrationBuilder.DropTable(
                 name: "Statuses");

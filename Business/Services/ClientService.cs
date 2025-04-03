@@ -1,6 +1,5 @@
 ﻿namespace Business.Services;
 
-public class CompanyService
+public class ClientService
 {
-
 }

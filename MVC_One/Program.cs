@@ -29,7 +29,7 @@ builder.Services.ConfigureApplicationCookie(x =>
 //Create a denied page? ------------
 
 
-builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();

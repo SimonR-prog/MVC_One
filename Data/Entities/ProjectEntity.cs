@@ -29,9 +29,9 @@ public class ProjectEntity
     public StatusEntity StatusName { get; set; } = null!;
 
 
-    [ForeignKey(nameof(Company))]
-    public string CompanyId { get; set; } = null!;
-    public CompanyEntity Company { get; set; } = null!;
+    [ForeignKey(nameof(ClientName))]
+    public string ClientId { get; set; } = null!;
+    public ClientEntity ClientName { get; set; } = null!;
 
 
     [ForeignKey(nameof(User))]
