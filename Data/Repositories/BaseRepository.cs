@@ -18,7 +18,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
         {
             if (entity == null)
             {
-                return Response.Error("Entity in null.");
+                return Response.NotFound("Entity in null.");
             }
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
@@ -128,7 +128,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
             var entity = await query.FirstOrDefaultAsync(where);
 
             if (entity == null)
-                return Response<TEntity>.Error(null, "Entity is null.");
+                return Response<TEntity>.NotFound(null, "Entity is null.");
 
             return Response<TEntity>.Ok(entity);
         }
@@ -143,7 +143,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
         try
         {
             if (entity == null)
-                return Response.Error("Entity is null.");
+                return Response.NotFound("Entity is null.");
 
             var result = await ExistsAsync(e => e == entity);
             if (result.Success == false)
@@ -164,7 +164,7 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
         try
         {
             if (entity == null)
-                return Response.Error("Entity is null.");
+                return Response.NotFound("Entity is null.");
 
             var result = await ExistsAsync(e => e == entity);
             if (result.Success == false)

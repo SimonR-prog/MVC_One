@@ -53,4 +53,14 @@ public class Response<T> : Response, IResponseContent<T>
             ErrorMessage = message
         };
     }
+    public static Response<T> NotFound(T? content, string message)
+    {
+        return new Response<T>
+        {
+            Success = false,
+            StatusCode = 404,
+            Content = content,
+            ErrorMessage = message
+        };
+    }
 }
