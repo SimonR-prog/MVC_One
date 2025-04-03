@@ -1,6 +1,6 @@
 ﻿namespace Business.Services;
 
-public class ProjectService
+public class AuthService
 {
 
 }
