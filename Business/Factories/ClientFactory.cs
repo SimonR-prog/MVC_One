@@ -3,19 +3,19 @@ using Domain.Models;
 
 namespace Business.Factories;
 
-public class StatusFactory
+public class ClientFactory
 {
-    public static Status? Create(StatusEntity entity)
+    public static Client? Create(ClientEntity entity)
     {
         if (entity == null)
         {
             return null;
         }
-        var status = new Status()
+        var client = new Client()
         {
             Id = entity.Id,
-            StatusName = entity.StatusName
+            ClientName = entity.ClientName
         };
-        return status;
+        return client;
     }
 }
