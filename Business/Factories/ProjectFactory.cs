@@ -1,30 +1,29 @@
-﻿using Business.Models;
-using Data.Entities;
-using Domain.Models;
+﻿using Data.Entities;
+using Domain.Models.Forms;
 
 namespace Business.Factories;
 
 public class ProjectFactory
 {
-    public static ProjectEntity? Create(AddProjectForm addProjectForm) => new ProjectEntity
+    public static ProjectEntity? Create(AddProjectFormData addProjectFormData) => new ProjectEntity
     {
-        ProjectName = addProjectForm.ProjectName,
-        Description = addProjectForm.Description,
-        StartDate = addProjectForm.StartDate,
-        EndDate = addProjectForm.EndDate,
-        Budget = addProjectForm.Budget,
+        ProjectName = addProjectFormData.ProjectName,
+        Description = addProjectFormData.Description,
+        StartDate = addProjectFormData.StartDate,
+        EndDate = addProjectFormData.EndDate,
+        Budget = addProjectFormData.Budget,
         
 
         //Need ids from status/client..
     };
-    public static ProjectEntity? Create(UpdateProjectForm updateProjectForm) => new ProjectEntity
+    public static ProjectEntity? Create(UpdateProjectFormData updateProjectFormData) => new ProjectEntity
     {
-        Id = updateProjectForm.Id,
-        ProjectName = updateProjectForm.ProjectName,
-        Description = updateProjectForm.Description,
-        StartDate = updateProjectForm.StartDate,
-        EndDate = updateProjectForm.EndDate,
-        Budget = updateProjectForm.Budget
+        Id = updateProjectFormData.Id,
+        ProjectName = updateProjectFormData.ProjectName,
+        Description = updateProjectFormData.Description,
+        StartDate = updateProjectFormData.StartDate,
+        EndDate = updateProjectFormData.EndDate,
+        Budget = updateProjectFormData.Budget
     };
 
 
