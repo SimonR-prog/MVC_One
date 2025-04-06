@@ -2,8 +2,7 @@
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Domain.Interfaces;
-using Domain.Models;
+using Domain.Models.ResponseHandlers;
 
 namespace Data.Repositories;
 
@@ -12,39 +11,70 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
     protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
-    public virtual async Task<IResponse> CreateAsync(TEntity entity)
+    public virtual async Task<RepositoryResponse> CreateAsync(TEntity entity)
     {
         try
         {
             if (entity == null)
             {
-                return Response.NotFound("Entity in null.");
+                return new RepositoryResponse()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "Not found"
+                };
             }
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
-            return Response.Ok();
+            return new RepositoryResponse()
+            {
+                Success = true,
+                StatusCode = 200
+            };
         }
         catch (Exception ex)
         {
-            return Response.Error($"An error occured: {ex.Message}");
+            return new RepositoryResponse()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}"
+            };
         }
     }
 
-    public virtual async Task<IResponse> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
+    public virtual async Task<RepositoryResponse> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
     {
         try
         {
             var exists = await _dbSet.AnyAsync(predicate);
 
-            return exists ? Response.Ok() : Response.NotFound("Entity not found.");
+            if (!exists)
+                return new RepositoryResponse()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "Not found"
+                };
+
+            return new RepositoryResponse()
+            {
+                Success = true,
+                StatusCode = 200,
+            };
         }
         catch (Exception ex)
         {
-            return Response.Error($"An error occured: {ex.Message}");
+            return new RepositoryResponse()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}"
+            };
         }
     }
 
-    public virtual async Task<IResponseContent<IEnumerable<TEntity>>> GetAllAsync(
+    public virtual async Task<RepositoryResponse<IEnumerable<TEntity>>> GetAllAsync(
             bool orderByDescending = false,
             Expression<Func<TEntity, object>>? sortBy = null,
             Expression<Func<TEntity, bool>>? where = null,
@@ -68,17 +98,33 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
             var entities = await query.ToListAsync();
             if (entities.Count == 0)
-                return Response<IEnumerable<TEntity>>.Ok(new List<TEntity>());
+                return new RepositoryResponse<IEnumerable<TEntity>>()
+                {
+                    Success = true,
+                    StatusCode = 204,
+                    Content = []
+                };
 
-            return Response<IEnumerable<TEntity>>.Ok(entities);
+            return new RepositoryResponse<IEnumerable<TEntity>>()
+            {
+                Success = true,
+                StatusCode = 200,
+                Content = entities
+            };
         }
         catch (Exception ex)
         {
-            return Response<IEnumerable<TEntity>>.Error(new List<TEntity>(), $"An error occured: {ex.Message}");
+            return new RepositoryResponse<IEnumerable<TEntity>>()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}",
+                Content = []
+            };
         }
     }
 
-    public virtual async Task<IResponseContent<IEnumerable<TSelect>>> GetAllAsync<TSelect>(
+    public virtual async Task<RepositoryResponse<IEnumerable<TSelect>>> GetAllAsync<TSelect>(
             Expression<Func<TEntity, TSelect>> selector,
             bool orderByDescending = false,
             Expression<Func<TEntity, object>>? sortBy = null,
@@ -103,17 +149,33 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
 
             var entities = await query.Select(selector).ToListAsync();
             if (entities.Count == 0)
-                return Response<IEnumerable<TSelect>>.Ok(new List<TSelect>());
+                return new RepositoryResponse<IEnumerable<TSelect>>()
+                {
+                    Success = true,
+                    StatusCode = 204,
+                    Content = []
+                };
 
-            return Response<IEnumerable<TSelect>>.Ok(entities);
+            return new RepositoryResponse<IEnumerable<TSelect>>()
+            {
+                Success = true,
+                StatusCode = 200,
+                Content = entities
+            };
         }
         catch (Exception ex)
         {
-            return Response<IEnumerable<TSelect>>.Error(new List<TSelect>(), $"An error occured: {ex.Message}");
+            return new RepositoryResponse<IEnumerable<TSelect>>()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}",
+                Content = []
+            };
         }
     }
 
-    public virtual async Task<IResponseContent<TEntity>> GetAsync(
+    public virtual async Task<RepositoryResponse<TEntity>> GetAsync(
         Expression<Func<TEntity, bool>> where,
         params Expression<Func<TEntity, object>>[] includes)
     {
@@ -128,56 +190,109 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
             var entity = await query.FirstOrDefaultAsync(where);
 
             if (entity == null)
-                return Response<TEntity>.NotFound(null, "Entity is null.");
+                return new RepositoryResponse<TEntity>()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "Not found"
+                };
 
-            return Response<TEntity>.Ok(entity);
+            return new RepositoryResponse<TEntity>()
+            {
+                Success = true,
+                StatusCode = 200,
+                Content = entity
+            };
         }
         catch (Exception ex)
         {
-            return Response<TEntity>.Error(null, $"An error occured: {ex.Message}");
+            return new RepositoryResponse<TEntity>()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}",
+            };
         }
     }
 
-    public virtual async Task<IResponse> UpdateAsync(TEntity entity)
+    public virtual async Task<RepositoryResponse> UpdateAsync(TEntity entity)
     {
         try
         {
             if (entity == null)
-                return Response.NotFound("Entity is null.");
+                return new RepositoryResponse()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "Not found"
+                };
 
             var result = await ExistsAsync(e => e == entity);
             if (result.Success == false)
-                return Response.NotFound("Entity not found");
+                return new RepositoryResponse()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "Not found"
+                };
 
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();
 
-            return Response.Ok();
+            return new RepositoryResponse() 
+            { 
+                Success = true, 
+                StatusCode = 200 
+            };
         }
         catch (Exception ex)
         {
-            return Response.Error($"An error occured: {ex.Message}");
+            return new RepositoryResponse()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}",
+            };
         }
     }
-    public virtual async Task<IResponse> DeleteAsync(TEntity entity)
+    public virtual async Task<RepositoryResponse> DeleteAsync(TEntity entity)
     {
         try
         {
             if (entity == null)
-                return Response.NotFound("Entity is null.");
+                return new RepositoryResponse()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "Not found"
+                };
 
             var result = await ExistsAsync(e => e == entity);
             if (result.Success == false)
-                return Response.NotFound("Entity not found");
+                return new RepositoryResponse()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "Not found"
+                };
 
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync();
 
-            return Response.Ok();
+            return new RepositoryResponse()
+            {
+                Success = true,
+                StatusCode = 200,
+            };
         }
         catch (Exception ex)
         {
-            return Response.Error($"An error occured: {ex.Message}");
+            return new RepositoryResponse()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}",
+            };
         }
     }
 }

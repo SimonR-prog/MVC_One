@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Domain.Models.Forms;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Business.Factories;
 
@@ -25,13 +26,6 @@ public class ProjectFactory
         EndDate = updateProjectFormData.EndDate,
         Budget = updateProjectFormData.Budget
     };
-
-
-
-
-
-
-
 
     public static Project? Create(ProjectEntity entity)
     {
