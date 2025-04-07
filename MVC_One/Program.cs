@@ -17,9 +17,11 @@ builder.Services.AddIdentity<UserEntity, IdentityRole>(x =>
     //Check for more in the login videos. ------------
 
 }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+
 builder.Services.ConfigureApplicationCookie(x =>
 {
     x.LoginPath = "/auth/signin";
+    x.LogoutPath = "/";
     x.AccessDeniedPath = "/auth/denied";
     x.Cookie.HttpOnly = true;
     x.Cookie.IsEssential = true;
@@ -52,7 +54,7 @@ app.UseRewriter(new RewriteOptions().AddRedirect("^$", "/projects"));
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Projects}/{action=Index}/{id?}")
+    pattern: "{controller=Auth}/{action=Login}/{id?}")
     .WithStaticAssets();
 
 app.Run();

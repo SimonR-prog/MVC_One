@@ -172,12 +172,11 @@ html, body {
 /* center screen */
 
 .center-main {
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
 }
-
-
-
-
 
 
 /* Hide or show things */
@@ -453,15 +452,25 @@ section .section-surface{
     width:450px;
 }
 
+/*           Länkar            */
+
+a {
+    text-decoration: none;
+    color: var(--blue);
+    font-weight: 600;
+}
+
+    a:hover {
+        color: var(--blue-semilight);
+        text-decoration: underline;
+    }
 
 
+/*          Sign in..          */
 
+#signin {
+    width: 100%;
 
-
-
-
-
-
-
+}
 
 

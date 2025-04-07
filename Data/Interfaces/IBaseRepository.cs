@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces;
-using Domain.Models.ResponseHandlers;
+﻿using Domain.Models.ResponseHandlers;
 using System.Linq.Expressions;
 
 namespace Data.Interfaces

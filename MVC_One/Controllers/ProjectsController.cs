@@ -1,5 +1,4 @@
-﻿using Business.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace MVC_One.Controllers;
 

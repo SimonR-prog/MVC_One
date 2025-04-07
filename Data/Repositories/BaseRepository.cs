@@ -20,8 +20,8 @@ public abstract class BaseRepository<TEntity, TModel>(DataContext context) : IBa
                 return new RepositoryResponse()
                 {
                     Success = false,
-                    StatusCode = 404,
-                    ErrorMessage = "Not found"
+                    StatusCode = 400,
+                    ErrorMessage = "Entity is null."
                 };
             }
             await _dbSet.AddAsync(entity);

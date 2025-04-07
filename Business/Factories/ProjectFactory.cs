@@ -8,6 +8,7 @@ public class ProjectFactory
 {
     public static Project Create(ProjectEntity entity)
     {
+        if (entity == null) { return null; }
         var project = new Project()
         {
             Id = entity.Id,
@@ -17,6 +18,25 @@ public class ProjectFactory
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
             Budget = entity.Budget,
+
+            Client = new Client()
+            {
+                Id = entity.Client.Id,
+                ClientName = entity.Client.ClientName
+            },
+            Status = new Status()
+            {
+                Id = entity.Status.Id,
+                StatusName = entity.Status.StatusName
+            },
+            User = new User()
+            {
+                Id = entity.User.Id,
+                FirstName = entity.User.FirstName,
+                LastName = entity.User.LastName,
+                Email = entity.User.Email,
+                PhoneNumber = entity.User.PhoneNumber
+            }
         };
         return project;
     }
@@ -54,6 +74,4 @@ public class ProjectFactory
         };
         return updatedProjectEntity;
     }
-
-
 }

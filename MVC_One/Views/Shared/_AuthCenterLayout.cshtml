@@ -15,11 +15,11 @@
 </head>
 <body>
 
-
-    <main class="center-main">
-        @RenderBody()
-    </main>
-
+    <div class="center-main">
+        <main>
+            @RenderBody()
+        </main>
+    </div>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

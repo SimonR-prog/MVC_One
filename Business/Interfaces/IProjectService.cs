@@ -10,7 +10,7 @@ namespace Business.Interfaces
         Task<ProjectResponse> AddProjectAsync(AddProjectFormData projectFormData);
         Task<ProjectResponse<IEnumerable<Project>>> GetAllProjectsAsync();
         Task<ProjectResponse<Project>> GetProjectAsync(string id);
-        Task<ProjectResponse> RemoveProjectAsync();
-        Task<ProjectResponse> UpdateProjectAsync();
+        Task<ProjectResponse> RemoveProjectAsync(string id);
+        Task<ProjectResponse> UpdateProjectAsync(UpdateProjectFormData updatedProjectForm);
     }
 }
