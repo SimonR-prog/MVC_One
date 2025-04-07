@@ -5,18 +5,14 @@ namespace Business.Factories;
 
 public class UserFactory
 {
-    public static User? Create(UserEntity entity)
+    public static User Create(UserEntity entity)
     {
-        if (entity == null)
-        {
-            return null;
-        }
         var user = new User()
         {
             Id = entity.Id,
             FirstName = entity.FirstName,
             LastName = entity.LastName,
-            Email = entity.Email,
+            Email = entity.Email!,
             PhoneNumber = entity.PhoneNumber
         };
         return user;

@@ -2,7 +2,7 @@
 
 public class UpdateProjectFormData
 {
-    public int Id { get; set; }
+    public string Id { get; set; } = null!;
     public string? Image { get; set; }
     public string ProjectName { get; set; } = null!;
     public string? Description { get; set; }

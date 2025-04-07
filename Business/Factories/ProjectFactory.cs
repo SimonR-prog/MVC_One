@@ -1,39 +1,13 @@
 ﻿using Data.Entities;
+using Domain.Models;
 using Domain.Models.Forms;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Business.Factories;
 
 public class ProjectFactory
 {
-    public static ProjectEntity? Create(AddProjectFormData addProjectFormData) => new ProjectEntity
+    public static Project Create(ProjectEntity entity)
     {
-        ProjectName = addProjectFormData.ProjectName,
-        Description = addProjectFormData.Description,
-        StartDate = addProjectFormData.StartDate,
-        EndDate = addProjectFormData.EndDate,
-        Budget = addProjectFormData.Budget,
-        
-
-        //Need ids from status/client..
-    };
-    public static ProjectEntity? Create(UpdateProjectFormData updateProjectFormData) => new ProjectEntity
-    {
-        Id = updateProjectFormData.Id,
-        ProjectName = updateProjectFormData.ProjectName,
-        Description = updateProjectFormData.Description,
-        StartDate = updateProjectFormData.StartDate,
-        EndDate = updateProjectFormData.EndDate,
-        Budget = updateProjectFormData.Budget
-    };
-
-    public static Project? Create(ProjectEntity entity)
-    {
-        if (entity == null)
-        {
-            return null;
-        }
-
         var project = new Project()
         {
             Id = entity.Id,
@@ -44,7 +18,42 @@ public class ProjectFactory
             EndDate = entity.EndDate,
             Budget = entity.Budget,
         };
-
         return project;
     }
+
+    public static ProjectEntity Create(AddProjectFormData addFormData)
+    {
+        var newProjectEntity = new ProjectEntity()
+        {
+            ImageUrl = addFormData.Image,
+            ProjectName = addFormData.ProjectName,
+            Description = addFormData.Description,
+            StartDate = addFormData.StartDate,
+            EndDate = addFormData.EndDate,
+            Budget = addFormData.Budget,
+            ClientId = addFormData.ClientId,
+            UserId = addFormData.UserId,
+            StatusId = addFormData.StatusId
+        };
+        return newProjectEntity;
+    }
+
+    public static ProjectEntity Create(UpdateProjectFormData updateFormData)
+    {
+        var updatedProjectEntity = new ProjectEntity()
+        {
+            Id = updateFormData.Id,
+            ProjectName = updateFormData.ProjectName,
+            Description = updateFormData.Description,
+            StartDate = updateFormData.StartDate,
+            EndDate = updateFormData.EndDate,
+            Budget = updateFormData.Budget,
+            ClientId = updateFormData.ClientId,
+            UserId = updateFormData.UserId,
+            StatusId = updateFormData.StatusId
+        };
+        return updatedProjectEntity;
+    }
+
+
 }

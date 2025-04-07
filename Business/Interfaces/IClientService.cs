@@ -1,10 +1,10 @@
-﻿using Domain.Interfaces;
-using Domain.Models;
+﻿using Domain.Models;
+using Domain.Models.ResponseHandlers;
 
 namespace Business.Interfaces
 {
     public interface IClientService
     {
-        Task<IResponseContent<IEnumerable<Client?>>> GetAllClientAsync();
+        Task<ClientResponse<IEnumerable<Client?>>> GetAllClientAsync();
     }
 }

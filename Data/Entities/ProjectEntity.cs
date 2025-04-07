@@ -13,7 +13,7 @@ public class ProjectEntity
     public string? Description { get; set; }
 
     [Column(TypeName = "date")]
-    public DateTime StartDate { get; set; }
+    public DateTime? StartDate { get; set; }
 
     [Column(TypeName = "date")]
     public DateTime? EndDate { get; set; }
@@ -24,14 +24,14 @@ public class ProjectEntity
 
 
 
-    [ForeignKey(nameof(StatusName))]
+    [ForeignKey(nameof(Status))]
     public int StatusId { get; set; }
-    public StatusEntity StatusName { get; set; } = null!;
+    public StatusEntity Status { get; set; } = null!;
 
 
-    [ForeignKey(nameof(ClientName))]
+    [ForeignKey(nameof(Client))]
     public string ClientId { get; set; } = null!;
-    public ClientEntity ClientName { get; set; } = null!;
+    public ClientEntity Client { get; set; } = null!;
 
 
     [ForeignKey(nameof(User))]

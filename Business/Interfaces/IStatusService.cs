@@ -1,10 +1,11 @@
-﻿using Domain.Interfaces;
-using Domain.Models;
+﻿using Domain.Models;
+using Domain.Models.ResponseHandlers;
+
 
 namespace Business.Interfaces
 {
     public interface IStatusService
     {
-        Task<IResponseContent<IEnumerable<Status?>>> GetAllStatusAsync();
+        Task<StatusResponse<IEnumerable<Status?>>> GetAllStatusAsync();
     }
 }

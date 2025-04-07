@@ -1,8 +1,8 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Data.Interfaces;
-using Domain.Interfaces;
 using Domain.Models;
+using Domain.Models.ResponseHandlers;
 
 namespace Business.Services;
 
@@ -11,17 +11,17 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
     private readonly IStatusRepository _statusRepository = statusRepository;
 
 
-    public async Task<IResponseContent<IEnumerable<Status?>>> GetAllStatusAsync()
+    public async Task<StatusResponse<IEnumerable<Status?>>> GetAllStatusAsync()
     {
-        var entities = await _statusRepository.GetAllAsync();
+        var statusEntities = await _statusRepository.GetAllAsync();
 
-        if (entities.Content == null)
+        if (statusEntities.Content == null)
         {
-            return Response<IEnumerable<Status?>>.NotFound(new List<Status>(), "There are no statuses.");
+            
         }
 
-        var statuses = entities.Content.Select(StatusFactory.Create);
-        return Response<IEnumerable<Status?>>.Ok(statuses);
+        var statuses = statusEntities.Content.Select(StatusFactory.Create);
+        
     }
 
 

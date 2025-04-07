@@ -1,15 +1,16 @@
-﻿using Domain.Interfaces;
-using Domain.Models;
+﻿using Domain.Models;
 using Domain.Models.Forms;
+using Domain.Models.ResponseHandlers;
+
 
 namespace Business.Interfaces
 {
     public interface IProjectService
     {
-        Task<IResponse> AddProjectAsync(AddProjectFormData projectFormData);
-        Task<IResponseContent<IEnumerable<Project>>> GetAllProjectsAsync();
-        Task<IResponseContent<Project>> GetProjectAsync(string id);
-        Task<IResponse> RemoveProjectAsync();
-        Task<IResponse> UpdateProjectAsync();
+        Task<ProjectResponse> AddProjectAsync(AddProjectFormData projectFormData);
+        Task<ProjectResponse<IEnumerable<Project>>> GetAllProjectsAsync();
+        Task<ProjectResponse<Project>> GetProjectAsync(string id);
+        Task<ProjectResponse> RemoveProjectAsync();
+        Task<ProjectResponse> UpdateProjectAsync();
     }
 }
