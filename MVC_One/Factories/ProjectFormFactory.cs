@@ -10,7 +10,15 @@ public class ProjectFormFactory
     {
         var newProjectFormData = new AddProjectFormData()
         {
-
+            Image = addViewModelData.Image,
+            ProjectName = addViewModelData.ProjectName,
+            Description = addViewModelData.Description,
+            StartDate = addViewModelData.StartData,
+            EndDate = addViewModelData.EndDate,
+            Budget = addViewModelData.Budget,
+            ClientId = addViewModelData.ClientId,
+            UserId = addViewModelData.UserId,
+            StatusId = addViewModelData.StatusId
         };
         return newProjectFormData;
     }
@@ -18,7 +26,16 @@ public class ProjectFormFactory
     {
         var updatedProjectFormData = new UpdateProjectFormData()
         {
-
+            Id = updateViewModelData.Id,
+            Image = updateViewModelData.Image,
+            ProjectName = updateViewModelData.ProjectName,
+            Description = updateViewModelData.Description,
+            StartDate = updateViewModelData.StartData,
+            EndDate = updateViewModelData.EndDate,
+            Budget = updateViewModelData.Budget,
+            ClientId = updateViewModelData.ClientId,
+            UserId = updateViewModelData.UserId,
+            StatusId = updateViewModelData.StatusId
         };
         return updatedProjectFormData;
     }

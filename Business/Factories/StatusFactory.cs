@@ -7,6 +7,7 @@ public class StatusFactory
 {
     public static Status Create(StatusEntity entity)
     {
+        if (entity == null) { return null!; }
         var status = new Status()
         {
             Id = entity.Id,

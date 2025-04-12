@@ -8,7 +8,7 @@ public class ProjectFactory
 {
     public static Project Create(ProjectEntity entity)
     {
-        if (entity == null) { return null; }
+        if (entity == null) { return null!; }
         var project = new Project()
         {
             Id = entity.Id,
@@ -18,31 +18,16 @@ public class ProjectFactory
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
             Budget = entity.Budget,
-
-            Client = new Client()
-            {
-                Id = entity.Client.Id,
-                ClientName = entity.Client.ClientName
-            },
-            Status = new Status()
-            {
-                Id = entity.Status.Id,
-                StatusName = entity.Status.StatusName
-            },
-            User = new User()
-            {
-                Id = entity.User.Id,
-                FirstName = entity.User.FirstName,
-                LastName = entity.User.LastName,
-                Email = entity.User.Email,
-                PhoneNumber = entity.User.PhoneNumber
-            }
+            Client = ClientFactory.Create(entity.Client),
+            Status = StatusFactory.Create(entity.Status),
+            User = UserFactory.Create(entity.User)
         };
         return project;
     }
 
     public static ProjectEntity Create(AddProjectFormData addFormData)
     {
+        if (addFormData == null) { return null!; }
         var newProjectEntity = new ProjectEntity()
         {
             ImageUrl = addFormData.Image,
@@ -60,6 +45,7 @@ public class ProjectFactory
 
     public static ProjectEntity Create(UpdateProjectFormData updateFormData)
     {
+        if (updateFormData == null) { return null!; }
         var updatedProjectEntity = new ProjectEntity()
         {
             Id = updateFormData.Id,

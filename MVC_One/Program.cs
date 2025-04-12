@@ -1,7 +1,7 @@
+using Business.Extension;
 using Data.Context;
 using Data.Entities;
-using Data.Interfaces;
-using Data.Repositories;
+using Data.Extension;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
@@ -31,12 +31,8 @@ builder.Services.ConfigureApplicationCookie(x =>
 //Create a denied page? ------------
 
 
-builder.Services.AddScoped<IClientRepository, ClientRepository>();
-builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IStatusRepository, StatusRepository>();
-
-
+builder.Services.AddRepositories();
+builder.Services.AddServices();
 
 
 var app = builder.Build();

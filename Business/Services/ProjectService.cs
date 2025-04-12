@@ -14,8 +14,6 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
     public async Task<ProjectResponse> AddProjectAsync(AddProjectFormData projectFormData)
     {
-        // Take in a form => send to factory to get entity => send to repo to add and then return success if ok..
-
         try
         {
             var result = await _projectRepository.ExistsAsync(project => project.ProjectName == projectFormData.ProjectName);
