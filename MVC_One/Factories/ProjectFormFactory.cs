@@ -10,7 +10,6 @@ public class ProjectFormFactory
     {
         var newProjectFormData = new AddProjectFormData()
         {
-            Image = addViewModelData.Image,
             ProjectName = addViewModelData.ProjectName,
             Description = addViewModelData.Description,
             StartDate = addViewModelData.StartDate,
@@ -26,10 +25,9 @@ public class ProjectFormFactory
         var updatedProjectFormData = new UpdateProjectFormData()
         {
             Id = updateViewModelData.Id,
-            Image = updateViewModelData.Image,
             ProjectName = updateViewModelData.ProjectName,
             Description = updateViewModelData.Description,
-            StartDate = updateViewModelData.StartData,
+            StartDate = updateViewModelData.StartDate,
             EndDate = updateViewModelData.EndDate,
             Budget = updateViewModelData.Budget,
             ClientId = updateViewModelData.ClientId,

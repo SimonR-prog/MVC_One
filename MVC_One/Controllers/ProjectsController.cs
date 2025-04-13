@@ -1,5 +1,4 @@
-﻿using Business.Factories;
-using Business.Interfaces;
+﻿using Business.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -91,15 +90,15 @@ public class ProjectsController(IStatusService statusService, IClientService cli
     private async Task<IEnumerable<Project>> SetProjectsAsync()
     {
         var result = await _projectService.GetAllProjectsAsync();
-        var projects = result.Content;
+        var projects = result.Content ?? [];
         projects = projects.OrderByDescending(x => x.Created);
-        return projects ?? [];
+        return projects;
     }
 
     private async Task<IEnumerable<SelectListItem>> SetClientSelectListItemsAsync()
     {
         var result = await _clientService.GetAllClientAsync();
-        var clients = result.Content;
+        var clients = result.Content ?? [];
         clients = clients.OrderBy(x => x.ClientName);
 
         var selectListItems = clients.Select(client => new SelectListItem
@@ -114,7 +113,7 @@ public class ProjectsController(IStatusService statusService, IClientService cli
     private async Task<IEnumerable<SelectListItem>> SetUserSelectListItemsAsync()
     {
         var result = await _userService.GetAllUsersAsync();
-        var users = result.Content;
+        var users = result.Content ?? [];
         users = users.OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
 
         var selectListItems = users.Select(user => new SelectListItem
@@ -129,7 +128,7 @@ public class ProjectsController(IStatusService statusService, IClientService cli
     private async Task<IEnumerable<SelectListItem>> SetStatusSelectListItemsAsync()
     {
         var result = await _statusService.GetAllStatusAsync();
-        var statuses = result.Content;
+        var statuses = result.Content ?? [];
         statuses = statuses.OrderBy(x => x.Id);
 
         var selectListItems = statuses.Select(status => new SelectListItem

@@ -33,6 +33,6 @@ public class AddProjectViewModel
     public decimal? Budget { get; set; }
 
     [Required]
-    [Display(Name = "Member", Prompt = "Select member")]
+    [Display(Name = "User", Prompt = "Select user")]
     public string UserId { get; set; } = null!;
 }
