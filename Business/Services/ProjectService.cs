@@ -27,6 +27,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
                 };
             }
 
+            projectFormData.StatusId = 1;
             var entityToAdd = ProjectFactory.Create(projectFormData);
             if (entityToAdd == null) 
             {

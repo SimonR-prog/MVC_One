@@ -18,6 +18,7 @@ public class ProjectFactory
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
             Budget = entity.Budget,
+            Created = entity.Created,
             Client = ClientFactory.Create(entity.Client),
             Status = StatusFactory.Create(entity.Status),
             User = UserFactory.Create(entity.User)

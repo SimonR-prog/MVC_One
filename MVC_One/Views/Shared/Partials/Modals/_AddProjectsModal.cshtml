@@ -1,5 +1,5 @@
 ﻿
-@model AddProjectForm
+@model AddProjectViewModel
 
 
 <div id="addProjectsModal" class="modal" data-type="modal">
@@ -21,10 +21,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Client"></label>
+                    <label asp-for="ClientId"></label>
                     <div class="field-group">
-                        <input asp-for="Client" />
-                        <span asp-validation-for="Client"></span>
+                        <input asp-for="ClientId" />
+                        <span asp-validation-for="ClientId"></span>
                     </div>
                 </div>
 

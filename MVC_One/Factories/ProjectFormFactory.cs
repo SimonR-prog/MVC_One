@@ -13,12 +13,11 @@ public class ProjectFormFactory
             Image = addViewModelData.Image,
             ProjectName = addViewModelData.ProjectName,
             Description = addViewModelData.Description,
-            StartDate = addViewModelData.StartData,
+            StartDate = addViewModelData.StartDate,
             EndDate = addViewModelData.EndDate,
             Budget = addViewModelData.Budget,
             ClientId = addViewModelData.ClientId,
             UserId = addViewModelData.UserId,
-            StatusId = addViewModelData.StatusId
         };
         return newProjectFormData;
     }

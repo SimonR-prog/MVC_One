@@ -2,6 +2,9 @@
 
 namespace MVC_One.Models;
 
+
+//Asked chatgpt for the regex that is here.
+
 public class RegisterViewModel
 {
     [Required(ErrorMessage = "is required.")]

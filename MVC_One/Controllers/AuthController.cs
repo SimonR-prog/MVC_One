@@ -45,6 +45,9 @@ public class AuthController(IAuthService authService, IUserService userService) 
         return View(registerModel);
     }
 
+
+
+
     [Route("auth/login")]
     public IActionResult Login(string returnUrl = "~/")
     {
@@ -76,6 +79,9 @@ public class AuthController(IAuthService authService, IUserService userService) 
         ViewBag.ErrorMessage = "Error when trying to log in.";
         return View(loginModel);
     }
+
+
+
 
     [Route("auth/logout")]
     public async Task<IActionResult> LogOut()
