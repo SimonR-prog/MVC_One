@@ -6,7 +6,7 @@ namespace MVC_One.Models;
 public class AddProjectViewModel
 {
     public IEnumerable<SelectListItem> Clients { get; set; } = [];
-    public IEnumerable<SelectListItem> Members { get; set; } = [];
+    public IEnumerable<SelectListItem> Users { get; set; } = [];
 
     [Required]
     [Display(Name = "Project Name", Prompt = "Enter project name")]

@@ -1,61 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MVC_One.Models;
 
 namespace MVC_One.Controllers;
 
-public class ProjectsController : Controller
+[Authorize]
+public class ProjectsController(IStatusService statusService, IClientService clientService, IProjectService projectService, IUserService userService) : Controller
 {
-    [Route("/")]
-    [Route("projects")]
-    public IActionResult Index()
+    private readonly IStatusService _statusService = statusService;
+    private readonly IClientService _clientService = clientService;
+    private readonly IProjectService _projectService = projectService;
+    private readonly IUserService _userService = userService;
+
+
+    public async Task<IActionResult> Index()
     {
         return View();
     }
 
-    //[HttpPost]
-    //public async IActionResult Add(AddProjectForm form)
-    //{
-    //    if (!ModelState.IsValid) 
-    //    {
-    //        var errors = ModelState
-    //            .Where(x => x.Value?.Errors.Count > 0)
-    //            .ToDictionary(
-    //                kvp => kvp.Key,
-    //                kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage).ToArray()
-    //            );
-    //        return BadRequest(new { errors });
-    //    }
 
-    //    var result = await _projectService.CreateAsyncProject(form);
-        
-
-
-
-    //    return Ok();
-    //}
-
-    //[HttpPut]
-    //public IActionResult Update(UpdateProjectForm form)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        var errors = ModelState
-    //            .Where(x => x.Value?.Errors.Count > 0)
-    //            .ToDictionary(
-    //                kvp => kvp.Key,
-    //                kvp => kvp.Value?.Errors.Select(x => x.ErrorMessage).ToArray()
-    //            );
-    //        return BadRequest(new { errors });
-    //    }
-
-    //    //Save to db.
-
-    //    return Ok();
-    //}
-
-    [HttpDelete]
-    public IActionResult Delete()
+    [HttpPost]
+    public async Task<IActionResult> Create([FromForm] AddProjectViewModel model)
     {
-        return View();
+
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdateProjectViewModel model)
+    {
+
     }
 
 }

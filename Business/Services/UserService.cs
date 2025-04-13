@@ -54,7 +54,7 @@ public class UserService(IUserRepository userRepository) : IUserService
                 StatusCode = 200
             };
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             return new UserResponse()
             {
@@ -113,16 +113,42 @@ public class UserService(IUserRepository userRepository) : IUserService
         {
             if (id.IsNullOrEmpty())
             {
-                return new UserResponse()
+                return new UserResponse<User>()
                 {
-                    
-                }
+                    Success = false,
+                    StatusCode = 400,
+                    ErrorMessage = "Id is null."
+                };
             }
 
+            var existsResult = await _userRepository.ExistsAsync(x => x.Id == id);
+            if (!existsResult.Success)
+            {
+                return new UserResponse<User>()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "User with this id does not exist."
+                };
+            }
 
+            var result = await _userRepository.GetAsync(x => x.Id == id);
+            if (result.Content == null)
+            {
+                return new UserResponse<User>()
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    ErrorMessage = "Id is null."
+                };
+            }
 
-
-
+            return new UserResponse<User>()
+            {
+                Success = true,
+                StatusCode = 200,
+                Content = UserFactory.Create(result.Content)
+            };
         }
         catch (Exception ex)
         {
@@ -134,14 +160,46 @@ public class UserService(IUserRepository userRepository) : IUserService
             };
         }
     }
+
+    public async Task<UserResponse> UserExistingByEmailAsync(string email)
+    {
+        try
+        {
+            if (email.IsNullOrEmpty())
+            {
+                return new UserResponse()
+                {
+                    Success = false,
+                    StatusCode = 500,
+                    ErrorMessage = "Email is null."
+                };
+            }
+
+            var existsResult = await _userRepository.ExistsAsync(x => x.Email == email);
+            if (!existsResult.Success)
+            {
+                return new UserResponse()
+                {
+                    Success = false,
+                    StatusCode = 404,
+                    ErrorMessage = "User not found."
+                };
+            }
+
+            return new UserResponse()
+            {
+                Success = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new UserResponse()
+            {
+                Success = false,
+                StatusCode = 500,
+                ErrorMessage = $"{ex.Message}",
+            };
+        }
+    }
 }
-
-
-var repositoryResult = await _userRepository.GetAsync(x => x.Id == id);
-
-    var entity = repositoryResult.Result;
-        if (entity == null)
-            return new UserResult<User> { Succeeded = false, StatusCode = 404, Error = $"User with id '{id}' was not found." };
-
-var user = entity.MapTo<User>();
-return new UserResult<User> { Succeeded = true, StatusCode = 200, Result = user };
