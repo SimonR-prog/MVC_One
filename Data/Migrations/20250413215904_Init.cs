@@ -191,7 +191,7 @@ namespace Data.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "date", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "date", nullable: true),
                     EndDate = table.Column<DateTime>(type: "date", nullable: true),
                     Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
