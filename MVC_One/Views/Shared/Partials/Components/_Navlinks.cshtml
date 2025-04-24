@@ -1,9 +1,0 @@
-﻿
-@* When the path of the website is /projects then "active" is added to the class which changes the text + background color. *@
-
-<nav class="nav-links">
-    <a class="nav-link @(Context.Request.Path == "/projects" ? "active" : "")" asp-action="Index" asp-controller="Projects">
-        <i class="bi bi-briefcase-fill"></i>
-        <span>Projects</span>
-    </a>
-</nav>

@@ -13,14 +13,14 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
     private readonly IStatusRepository _statusRepository = statusRepository;
 
 
-    public async Task<StatusResponse<IEnumerable<Status?>>> GetAllStatusAsync()
+    public async Task<StatusResponse<IEnumerable<Status>>> GetAllStatusAsync()
     {
         try
         {
             var statusEntities = await _statusRepository.GetAllAsync();
             if (statusEntities.Content.IsNullOrEmpty())
             {
-                return new StatusResponse<IEnumerable<Status?>>()
+                return new StatusResponse<IEnumerable<Status>>()
                 {
                     Success = false,
                     StatusCode = 404,
@@ -30,7 +30,7 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
             }
 
             var statuses = statusEntities.Content.Select(StatusFactory.Create);
-            return new StatusResponse<IEnumerable<Status?>>()
+            return new StatusResponse<IEnumerable<Status>>()
             {
                 Success = true,
                 StatusCode = 200,
@@ -39,7 +39,7 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
         }
         catch (Exception ex) 
         {
-            return new StatusResponse<IEnumerable<Status?>>()
+            return new StatusResponse<IEnumerable<Status>>()
             {
                 Success = false,
                 StatusCode = 500,

@@ -42,24 +42,22 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
             var resultOfAdding = await _projectRepository.CreateAsync(entityToAdd);
             if (!resultOfAdding.Success)
             {
-                return new ProjectResponse<Project>()
+                return new ProjectResponse()
                 {
                     Success = false,
                     StatusCode = 500,
                     ErrorMessage = "Something went wrong with adding the project."
                 };
             }
-            return new ProjectResponse<Project>()
+            return new ProjectResponse()
             {
                 Success = true,
-                StatusCode = 200,
+                StatusCode = 200
             };
-
-
         }
         catch (Exception ex) 
         {
-            return new ProjectResponse<Project>()
+            return new ProjectResponse()
             {
                 Success = false,
                 StatusCode = 500,

@@ -1,14 +1,16 @@
-﻿
+﻿<header class="portal-header" id="header">
 
-<header class="portal-header">
+    @* Will need to hook this up to a controller *@
 
-    <div class="account">
-        <i class="bi bi-gear-fill"></i>
-        <img src="/images/portal_images/Profile_images/profile_img_1.svg" alt="Image of the logged in user." />
-    </div>
+    <form class="search-form" method="get" asp-controller="" asp-action="" novalidate>
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" class="form-search-input" placeholder="Search anything..." />
+    </form>
+
+@* 
+    @await Html.PartialAsync("Dropdowns/_NotificationDropdownPartial")
+*@
+
+    @await Html.PartialAsync("Partials/Components/_AccountDropdown") 
 
 </header>
-
-
-
-@* Need to insert the image of the currently logged in user in the image tag. *@ 

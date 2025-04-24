@@ -1,9 +1,7 @@
 ﻿using Business.Interfaces;
-using Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using MVC_One.Factories;
 using MVC_One.Models;
-using System.Security.Claims;
 
 namespace MVC_One.Controllers;
 
@@ -72,16 +70,12 @@ public class AuthController(IAuthService authService, IUserService userService) 
 
         if (authResult.Success)
         {
-            return LocalRedirect(returnUrl);
+            return RedirectToAction("Index", "Projects");
         }
-
         ViewBag.ReturnUrl = returnUrl;
         ViewBag.ErrorMessage = "Error when trying to log in.";
         return View(loginModel);
     }
-
-
-
 
     [Route("auth/logout")]
     public async Task<IActionResult> LogOut()

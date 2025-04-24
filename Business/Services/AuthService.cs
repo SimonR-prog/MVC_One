@@ -65,21 +65,10 @@ public class AuthService(SignInManager<UserEntity> signInManager, UserManager<Us
                     ErrorMessage = "The sign up form data is null."
                 };
 
-            var existsResult = await _userService.UserExistingByEmailAsync(formData.Email);
-            if (!existsResult.Success)
-            {
-                return new AuthResponse()
-                {
-                    Success = false,
-                    StatusCode = 400,
-                    ErrorMessage = existsResult.ErrorMessage
-                };
-            }
-
             var userEntity = UserFactory.Create(formData);
             userEntity.UserName = userEntity.Email;
-
             var createResult = await _userManager.CreateAsync(userEntity, formData.Password);
+
             if (!createResult.Succeeded)
             {
                 return new AuthResponse()
