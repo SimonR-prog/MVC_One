@@ -70,7 +70,7 @@ public class AuthController(IAuthService authService, IUserService userService) 
 
         if (authResult.Success)
         {
-            return RedirectToAction("Index", "Projects");
+            return LocalRedirect("/projects");
         }
         ViewBag.ReturnUrl = returnUrl;
         ViewBag.ErrorMessage = "Error when trying to log in.";
