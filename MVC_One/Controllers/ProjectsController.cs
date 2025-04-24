@@ -16,7 +16,7 @@ public class ProjectsController(IStatusService statusService, IClientService cli
     private readonly IProjectService _projectService = projectService;
     private readonly IUserService _userService = userService;
 
-
+    [Route("/Projects")]
     public async Task<IActionResult> Index()
     {
         var viewModel = new ProjectsViewModel()
@@ -38,8 +38,9 @@ public class ProjectsController(IStatusService statusService, IClientService cli
         return View(viewModel);
     }
 
+    [Route("/Projects/Create")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] AddProjectViewModel addProjectViewModelData)
+    public async Task<IActionResult> Create(AddProjectViewModel addProjectViewModelData)
     {
         if (!ModelState.IsValid)
         {
@@ -62,6 +63,7 @@ public class ProjectsController(IStatusService statusService, IClientService cli
         return Json(new { success = false });
     }
 
+    [Route("/Projects/Update")]
     [HttpPost]
     public async Task<IActionResult> Update([FromForm] UpdateProjectViewModel updateProjectViewModelData)
     {
@@ -84,6 +86,18 @@ public class ProjectsController(IStatusService statusService, IClientService cli
             return Json(new { success = true });
 
         return Json(new { success = false });
+    }
+
+    [Route("/Projects/Delete")]
+    [HttpPost]
+    public async Task<IActionResult> Delete(string id)
+    {
+
+        var result = await _projectService.RemoveProjectAsync(id);
+        if (result.Success == false)
+            return Json(new { success = false });
+
+        return Json(new { success = true });
     }
 
 
@@ -109,11 +123,10 @@ public class ProjectsController(IStatusService statusService, IClientService cli
 
         return selectListItems;
     }
-
     private async Task<IEnumerable<SelectListItem>> SetUserSelectListItemsAsync()
     {
         var result = await _userService.GetAllUsersAsync();
-        var users = result.Content ?? [];
+        var users = result.Content;
         users = users.OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
 
         var selectListItems = users.Select(user => new SelectListItem
@@ -128,7 +141,7 @@ public class ProjectsController(IStatusService statusService, IClientService cli
     private async Task<IEnumerable<SelectListItem>> SetStatusSelectListItemsAsync()
     {
         var result = await _statusService.GetAllStatusAsync();
-        var statuses = result.Content ?? [];
+        var statuses = result.Content;
         statuses = statuses.OrderBy(x => x.Id);
 
         var selectListItems = statuses.Select(status => new SelectListItem

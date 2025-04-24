@@ -6,7 +6,7 @@
 <div id="projects" class="page">
     <div class="page-header">
         <h1>Projects</h1>
-        <button type="button" class="btn" data-type="modal" data-target="#add-project-modal">
+        <button type="button" class="btn" data-type="modal" data-target="#add-projects-modal">
             <i class="fa-duotone fa-solid fa-plus"></i>
             <span>Add Project</span>
         </button>
@@ -17,19 +17,19 @@
         {
             @foreach (var project in Model.Projects)
             {
-                @await Html.PartialAsync("ListItems/_ProjectListItemPartial", project)
+                @await Html.PartialAsync("Partials/Components/_ProjectListItem", project)
             }
         }
     </section>
 </div>
 
-@await Html.PartialAsync("Modals/_AddProjectModalPartial", Model.AddProjectFormData)
-@await Html.PartialAsync("Modals/_EditProjectModalPartial", Model.UpdateProjectFormData)
+@await Html.PartialAsync("Partials/Modals/_AddProjectsModal", Model.AddProjectFormData)
+@await Html.PartialAsync("Partials/Modals/_UpdateProjectModal", Model.UpdateProjectFormData)
 
 
 <script src="~/js/validate.js"></script>
 <script>
-    document.querySelector("#add-project-modal form").addEventListener("submit", async function (e) {
+    document.querySelector("#add-projects-modal form").addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const form = e.target;
@@ -49,7 +49,7 @@
         }
     });
 
-    document.querySelector("#edit-project-modal form").addEventListener("submit", async function (e) {
+    document.querySelector("#update-project-modal form").addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const form = e.target;
@@ -68,5 +68,4 @@
             showValidationErrors(result.errors);
         }
     });
-
 </script>

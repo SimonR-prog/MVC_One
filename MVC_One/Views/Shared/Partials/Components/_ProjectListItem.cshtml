@@ -1,0 +1,82 @@
+﻿
+@model Project
+
+<div class="project card" data-project-id="@Model.Id">
+    <div class="card-header">
+
+        <div class="project-image">
+
+            @* Need to add images to the service so they get added to the projects on random. *@
+
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" />
+
+            }
+            else
+            {
+                <img src="~/images/portal_images/Project_images/project_img_1.svg" alt="template project image" />
+            }
+        </div>
+
+
+        <h6 class="project-name">@Model.ProjectName</h6>
+        <span class="client-name">@Model.Client.ClientName</span>
+        <div id="project-actions-container">
+
+            <button type="button" data-type="dropdown" data-target="#project-dropdown-@Model.Id" class="btn-action">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+
+            <div id="project-dropdown-@Model.Id" class="dropdown">
+                <div class="dropdown-body">
+                    <nav class="dropdown-actions">
+                        <button data-type="modal" data-target="#edit-project-modal" class="dropdown-action">
+                            <i class="fa-duotone fa-solid fa-pen-to-square"></i>
+                            <span>Edit</span>
+                        </button>
+                        <button class="dropdown-action" href="#">
+                            <i class="fa-duotone fa-solid fa-user-plus" style="--fa-primary-opacity: 0.4; --fa-secondary-opacity: 1;"></i>
+                            <span>Add Member</span>
+                        </button>
+                    </nav>
+                    <div class="divider"></div>
+                    <nav class="dropdown-actions">
+                        <a class="dropdown-action remove">
+
+                            <form asp-controller="Projects" asp-action="Delete" method="post">
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa-duotone fa-solid fa-trash"></i>
+                                    <span>Delete Project</span>
+                                </button>
+                            </form>
+
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <p>@Html.Raw(Model.Description)</p>
+    </div>
+    <div class="card-footer">
+        <div class="badge badge-normal">
+            <i class="fa-duotone fa-solid fa-clock"></i>
+
+            @* Need a variable which contains the time left until the projects enddate. *@
+
+            <span>5 days left</span>
+        </div>
+        <div class="members">
+
+            @* Need a for loop which goes through the list of users. *@
+
+            <div class="user-image">
+                <img src="/images/portal_images/Profile_images/profile_img_1.svg" alt="template project">
+            </div>
+        </div>
+    </div>
+</div> 
